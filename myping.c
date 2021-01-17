@@ -77,16 +77,20 @@ void ping(struct sockaddr_in *addr_s)
             exit(1);
         }
         if(flag){//if the pkt sent so we can recive her
-                printf("successfully recived reply\n"); 
-                break; 
-
+            if(!(pkt.hdr.type ==69 && pkt.hdr.code==0))  //check if the messeage correctly recived
+            { 
+                printf("there is a problem!\nPacket received with ICMP type %d code %d \n", pkt.hdr.type, pkt.hdr.code);               
+            } 
+            else
+            { 
+                printf("successfully recived reply\n");  
+                break;
             }    
         }
-
+}
         printf("milliseconds: %ld\n", ((end.tv_sec - start.tv_sec)* MILLION +(end.tv_usec - start.tv_usec))/THOUSAND);
         printf("microseconds: %ld\n", (end.tv_sec - start.tv_sec)* MILLION +(end.tv_usec - start.tv_usec));
 }
-
 
 
 
